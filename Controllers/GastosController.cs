@@ -1,58 +1,49 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
+using MisGastosApi.Models;
+using MisGastosApi.Services;
 
-namespace ExpenseTracker.Controllers
+namespace MisGastosApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class GastosController : ControllerBase
     {
-        private static List<Gasto> gastos = new List<Gasto>();
+        private readonly IGastoService _gastoService;
+
+        public GastosController(IGastoService gastoService)
+        {
+            _gastoService = gastoService;
+        }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(gastos);
+            return Ok(_gastoService.GetAll());
         }
 
         [HttpPost]
-        public IActionResult Post(Gasto gasto)
-        {
-            gasto.Id = gastos.Count + 1;
-            gastos.Add(gasto);
-            return Ok(gasto);
-        }
+        public IActionResult Post([FromBody] Gasto gasto)
+         {
+             _gastoService.Add(gasto);
+               return Ok(gasto);
+}
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Gasto input)
+        public IActionResult Put(int id, [FromBody] Gasto gasto)
         {
-            var g = gastos.FirstOrDefault(x => x.Id == id);
-            if (g == null) return NotFound();
+            var actualizado = _gastoService.Update(id, gasto);
+            if (actualizado == null) return NotFound();
 
-            g.Monto = input.Monto;
-            g.Categoria = input.Categoria;
-            g.Fecha = input.Fecha;
-
-            return Ok(g);
+            return Ok(actualizado);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var g = gastos.FirstOrDefault(x => x.Id == id);
-            if (g == null) return NotFound();
+            var eliminado = _gastoService.Delete(id);
+            if (!eliminado) return NotFound();
 
-            gastos.Remove(g);
-            return Ok();
+            return Ok("Eliminado");
         }
-    }
-
-    public class Gasto
-    {
-        public int Id { get; set; }
-        public decimal Monto { get; set; }
-        public string Categoria { get; set; }
-        public DateTime Fecha { get; set; }
     }
 }

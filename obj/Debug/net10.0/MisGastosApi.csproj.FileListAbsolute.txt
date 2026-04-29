@@ -138,3 +138,4 @@ C:\Users\hp\OneDrive - Technology Factory\Escritorio\Cproyectosmis-gastos\MisGas
 C:\Users\hp\OneDrive - Technology Factory\Escritorio\Cproyectosmis-gastos\MisGastosApi\obj\Debug\net10.0\MisGastosApi.pdb
 C:\Users\hp\OneDrive - Technology Factory\Escritorio\Cproyectosmis-gastos\MisGastosApi\obj\Debug\net10.0\MisGastosApi.genruntimeconfig.cache
 C:\Users\hp\OneDrive - Technology Factory\Escritorio\Cproyectosmis-gastos\MisGastosApi\obj\Debug\net10.0\ref\MisGastosApi.dll
+C:\Users\hp\OneDrive - Technology Factory\Escritorio\Cproyectosmis-gastos\MisGastosApi\obj\Debug\net10.0\MisGastosApi.sourcelink.json

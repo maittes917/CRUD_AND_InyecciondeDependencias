@@ -1,24 +1,18 @@
-using MisGastosApi.Data;
-using Microsoft.EntityFrameworkCore;
+using MisGastosApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ======================
-// SERVICIOS
-// ======================
+//  Inyección de dependencias
+builder.Services.AddScoped<IGastoService, GastoService>();
+
+// Servicios
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// BASE DE DATOS
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 var app = builder.Build();
 
-// ======================
-// PIPELINE
-// ======================
+// Swagger
 app.UseSwagger();
 app.UseSwaggerUI();
 
