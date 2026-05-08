@@ -21,18 +21,30 @@ namespace MisGastosApi.Controllers
             return Ok(_gastoService.GetAll());
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var gasto = _gastoService.GetById(id);
+
+            if (gasto == null)
+                return NotFound();
+
+            return Ok(gasto);
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody] Gasto gasto)
-         {
-             _gastoService.Add(gasto);
-               return Ok(gasto);
-}
+        {
+            return Ok(_gastoService.Add(gasto));
+        }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Gasto gasto)
+        public IActionResult Update(int id, [FromBody] Gasto gasto)
         {
             var actualizado = _gastoService.Update(id, gasto);
-            if (actualizado == null) return NotFound();
+
+            if (actualizado == null)
+                return NotFound();
 
             return Ok(actualizado);
         }
@@ -41,9 +53,11 @@ namespace MisGastosApi.Controllers
         public IActionResult Delete(int id)
         {
             var eliminado = _gastoService.Delete(id);
-            if (!eliminado) return NotFound();
 
-            return Ok("Eliminado");
+            if (!eliminado)
+                return NotFound();
+
+            return Ok("Gasto eliminado");
         }
     }
 }
